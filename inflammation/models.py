@@ -46,9 +46,15 @@ def patient_normalise(data):
     :param data: A 2D data array with inflammation data (each row contains measurements for a single patient across all days).
     :returns: An 2D array of patient inflammation data normalised to the maximum value
     """
+    if not isinstance(data,np.ndarray):
+        raise TypeError('Wrong data type')
+    if len(data.shape) != 2:
+        raise ValueError('Inflammation array should be 2D')
+    if np.any(data<0):
+        raise ValueError('Inflammation values should not be negative')
+
     max_data = np.nanmax(data, axis=1)
     with np.errstate(invalid='ignore', divide='ignore'):
         normalised = data / max_data[:, np.newaxis]
     normalised[np.isnan(normalised)] = 0
-    normalised[normalised < 0] = 0
     return normalised
