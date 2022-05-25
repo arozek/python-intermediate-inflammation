@@ -58,3 +58,71 @@ def patient_normalise(data):
         normalised = data / max_data[:, np.newaxis]
     normalised[np.isnan(normalised)] = 0
     return normalised
+
+def attach_names(data,names):
+    """Create data structure containing patient records"""
+    assert len(data)==len(names)
+    output=[]
+    for data_row,name in zip(data,names):
+        output.append({'name': name,
+                       'data': data_row})
+    return output
+
+class Observation:
+    def __init__(self, day, value):
+        self.day=day
+        self.value=value
+
+    def __str__(self):
+        return str(self.value)
+
+class Person:
+    """A random person that just has a name"""
+    def __init__(self,name):
+        self.name=name
+    def __str__(self):
+        return self.name
+
+class Patient(Person):
+    """A patient in an inflammation study. Who is also a person"""
+    def __init__(self, name):
+        super().__init__(name)
+        self.observations = []
+
+    def add_observation(self,value,day=None):
+        if day is None:
+            try:
+                day = self.observations[-1].day + 1
+            except IndexError:
+                day = 0
+
+            new_observation=Observation(day,value)
+
+            self.observations.append(new_observation)
+            return(new_observation)
+
+
+
+    @property
+    def last_observation(self):
+        return self.observations[-1]
+
+class Doctor(Person):
+    def __init__(self,name):
+        super().__init__(name)
+        self.patients=[]
+
+#    def add_patient(self, patient,patient_id=None)
+
+
+if __name__ == '__main__':
+
+    alice = Patient('Alice')
+    print(alice)
+    observation=alice.add_observation(3)
+    observation=alice.add_observation(5)
+    print(observation)
+
+    bob=Person('Bob')
+    print(bob)
+    observation=bob.add_observation(1)
