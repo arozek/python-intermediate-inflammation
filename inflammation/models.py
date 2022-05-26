@@ -79,7 +79,11 @@ class Observation:
 class Person:
     """A random person that just has a name"""
     def __init__(self,name):
-        self.name=name
+        if not isinstance(name, str):
+            raise TypeError('Name must be a string')
+            self.name=None
+        else:
+            self.name=name
     def __str__(self):
         return self.name
 
@@ -101,8 +105,6 @@ class Patient(Person):
             self.observations.append(new_observation)
             return(new_observation)
 
-
-
     @property
     def last_observation(self):
         return self.observations[-1]
@@ -112,17 +114,21 @@ class Doctor(Person):
         super().__init__(name)
         self.patients=[]
 
+    def add_patient(self, new_patient):
+
+        if isinstance(new_patient, str):
+            self.patients.append(Patient(new_patient))
+        elif isinstance(new_patient, Patient):
+            self.patients.append(new_patient)
+        else:
+            raise TypeError("A patient must be a Patient or patient's name")
+
+    def patient_ID(self,patient_name):
+        for i in range(len(self.patients)):
+            if self.patients[i].name ==patient_name:
+                return i
+
+        return Nan
+
 #    def add_patient(self, patient,patient_id=None)
 
-
-if __name__ == '__main__':
-
-    alice = Patient('Alice')
-    print(alice)
-    observation=alice.add_observation(3)
-    observation=alice.add_observation(5)
-    print(observation)
-
-    bob=Person('Bob')
-    print(bob)
-    observation=bob.add_observation(1)
