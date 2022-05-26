@@ -127,8 +127,7 @@ class Doctor(Person):
         for i in range(len(self.patients)):
             if self.patients[i].name ==patient_name:
                 return i
-
-        return Nan
+        return None
 
 #    def add_patient(self, patient,patient_id=None)
 

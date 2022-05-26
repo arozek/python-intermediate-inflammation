@@ -171,5 +171,7 @@ def test_doctor_patient_ID():
 
     assert dr_stu.patient_ID('Alice') == 0
     assert dr_stu.patient_ID('Bob') == 1
+    assert dr_stu.patient_ID('Carol') == None
+
 
 
