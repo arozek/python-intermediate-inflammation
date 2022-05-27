@@ -13,6 +13,16 @@ Here are some key features of Inflam:
 - Generate plots of trial data
 - Analytical functions and views can be easily extended based on its Model-View-Controller architecture
 
+## Bacis usage
+
+Inflam can be called from command line. The example below will show full record for patent 1 from the data file  :
+
+``` bash
+python3 inflammation-analysis.py --view record --patient 1 data/inflammation-01.csv 
+```
+
+
+
 ## Prerequisites
 
 Inflam requires the following Python packages:
